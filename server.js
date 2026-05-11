@@ -38,7 +38,7 @@ app.get('/auth/steam/return',
     const displayName = user.displayName;
     const avatar = user.photos?.[2]?.value || user.photos?.[0]?.value || '';
     // Redirect back to app with token
-    res.redirect(`trucklog://auth?steamId=${steamId}&name=${encodeURIComponent(displayName)}&avatar=${encodeURIComponent(avatar)}`);
+    res.send(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>TruckLog Auth</title></head><body style="background:#0a0d14;color:#e8e0d0;font-family:sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;flex-direction:column;gap:16px"><div style="font-size:24px">✅ Autentificat cu succes!</div><div style="font-size:16px;color:#14d9a0">${displayName}</div><div style="font-size:12px;color:#3a4560">Poți închide această fereastră și reveni la TruckLog</div><script>if(window.opener){window.opener.postMessage({type:'steam-auth',steamId:'${steamId}',name:'${displayName}',avatar:'${avatar}'},'*');}setTimeout(()=>window.close(),3000);</script></body></html>`);
   }
 );
 

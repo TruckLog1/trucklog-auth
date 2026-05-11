@@ -32,7 +32,9 @@ passport.deserializeUser((obj, done) => done(null, obj));
 app.get('/auth/steam', (req, res, next) => {
   const token = req.query.token || crypto.randomBytes(16).toString('hex');
   req.session.authToken = token;
-  passport.authenticate('steam', { failureRedirect: '/' })(req, res, next);
+  req.session.save(() => {
+    passport.authenticate('steam', { failureRedirect: '/' })(req, res, next);
+  });
 });
 
 // Steam callback
